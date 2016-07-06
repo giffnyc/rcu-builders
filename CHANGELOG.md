@@ -4,6 +4,10 @@
 
 * Update to edge version of rcu
 
+## 0.5.1
+
+* Bump `rcu` dependency
+
 ## 0.5.0
 
 * Cleaner generated code

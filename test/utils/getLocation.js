@@ -1,4 +1,4 @@
-export default function getLocation ( source, charIndex ) {
+module.exports = function getLocation ( source, charIndex ) {
 	var lines = source.split( '\n' );
 	var len = lines.length;
 

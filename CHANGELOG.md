@@ -1,5 +1,9 @@
 # changelog
 
+## 0.6.0-edge
+
+* Update to edge version of rcu
+
 ## 0.5.0
 
 * Cleaner generated code

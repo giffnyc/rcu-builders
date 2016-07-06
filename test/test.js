@@ -1,15 +1,15 @@
 /*global require */
-import * as sander from 'sander';
-import * as path from 'path';
-import * as assert from 'assert';
-import nodeResolve from 'resolve';
-import { transform } from 'babel-core';
-import { SourceMapConsumer } from 'source-map';
-import Ractive from 'ractive';
-import { init, parse, resolve } from 'rcu';
-import { describe, it } from 'mocha';
-import getLocation from './utils/getLocation.js';
-import { amd, cjs, es6 } from '..';
+const sander = require( 'sander' );
+const path = require( 'path' );
+const assert = require( 'assert' );
+const nodeResolve = require( 'resolve' );
+const { transform } = require( 'buble' );
+const { SourceMapConsumer } = require( 'source-map' );
+const Ractive = require( 'ractive' );
+const { init, parse, resolve } = require( 'rcu' );
+const { describe, it } = require( 'mocha' );
+const getLocation = require( './utils/getLocation.js' );
+const { amd, cjs, es6 } = require( '..' );
 
 init( Ractive );
 
@@ -154,16 +154,19 @@ describe( 'rcu-builders', () => {
 							sander.writeFileSync( file.replace( 'samples', 'output/es' ).replace( '.html', '.js' ), code );
 
 							code = transform( code, {
-								presets: [ 'es2015' ],
-								babelrc: false
+								transforms: { modules: false }
 							}).code;
+
+							code = code
+								.replace( /import (.+) from '(.+)'/g, 'var $1 = require(\'$2\')' )
+								.replace( 'export default', 'module.exports =' );
 
 							const fn = new Function( 'module', 'exports', 'require', code );
 
 							function req ( relativePath ) {
 								let resolved = resolve( relativePath, file ) + '.html';
 
-								if ( components[ resolved ] ) return components[ resolved ];
+								if ( resolved in components ) return components[ resolved ];
 
 								resolved = nodeResolve.sync( relativePath, {
 									basedir: path.dirname( file )

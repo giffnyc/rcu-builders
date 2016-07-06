@@ -1,6 +1,6 @@
-import * as assert from 'assert';
+const assert = require( 'assert' );
 
-export default function test ( Component ) {
+module.exports = function test ( Component ) {
 	const ractive = new Component({
 		data: { name: 'world' }
 	});

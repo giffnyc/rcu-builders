@@ -1,8 +1,8 @@
 # changelog
 
-## 0.6.0-edge
+## 0.6.0
 
-* Update to edge version of rcu
+* Update to current version of rcu
 
 ## 0.5.1
 
